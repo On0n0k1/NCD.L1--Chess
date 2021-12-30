@@ -1,0 +1,9 @@
+pub mod bishop;
+pub mod empty;
+pub mod king;
+pub mod knight;
+pub mod pawn;
+pub mod piece;
+pub mod piece_ext;
+pub mod queen;
+pub mod rook;
