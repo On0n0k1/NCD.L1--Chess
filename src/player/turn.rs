@@ -1,17 +1,9 @@
 use crate::{
-    // board::Board,
     pieces::{
         piece::{
             Color,
-            // Piece,
         },
-        // piece_ext::PieceExt,
     },
-    // movement::{
-    //     // report::Report,
-    //     step::Step,
-    // },
-    // player::player::Player,
     player::errors::ErrorResponse,
 };
 

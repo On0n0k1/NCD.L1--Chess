@@ -93,8 +93,21 @@ impl PieceExt for Piece{
         row: u8,
     ) -> Self {
         match piece_number{
-            0      => { return Piece::EMPTY(Empty::new(piece_number, column, row));                                },
-            1 | 7  => { return Piece::PAWN(Pawn::new(piece_number, column, row));                               },
+            0      => { return Piece::EMPTY(Empty::new(piece_number, column, row));                             },
+            1 | 7  => {
+                // if pawn reaches the last position of the board, replace the piece with a queen.
+                if (piece_number == 1) && (row == 0) || (piece_number == 7) && (row == 7){
+                    return Piece::QUEEN(
+                        Queen::new(
+                            piece_number + 4,           // piece_number: u8, 
+                            column,                     // column: u8, 
+                            row,                        // row: u8,
+                        )
+                    )
+                }
+
+                return Piece::PAWN(Pawn::new(piece_number, column, row));
+            },
             2 | 8  => { return Piece::ROOK(Rook::new(piece_number, column, row));                               },
             3 | 9  => { return Piece::KNIGHT(Knight::new(piece_number, column, row));                           },
             4 | 10 => { return Piece::BISHOP(Bishop::new(piece_number, column, row));                           },

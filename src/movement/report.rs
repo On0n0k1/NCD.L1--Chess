@@ -59,8 +59,6 @@ impl Report{
     // returns false if target is occupied by a rival or ally.
     pub fn include_step(
         &mut self, 
-        // target: Piece,
-        // current_piece: Piece,
         board: &Board,
         target_column: i8,
         target_row: i8,
@@ -69,16 +67,6 @@ impl Report{
         // used by pawn. If true, it will not include rival positions.
         no_rival: bool,
     ) -> bool {
-        // let index: u8 = Self::col_row_to_index(
-        //     col,                    // col: u8, 
-        //     row,                    // row: u8,
-        // );
-
-        // let step: Step =  Step::new(
-        //     &self.piece,            // piece: &Piece,
-        //     index,                  // target: u8,
-        // );
-
         let current_color: Color = self.piece.get_color();
 
         if(target_column < 0) || (target_row < 0) || (target_column > 7) || (target_row > 7){
@@ -216,61 +204,6 @@ impl Report{
                 // So if false, stop counting.
                 break;
             }
-
-            // if (0 < col) || (col > 7) || (0 < row) || (row > 7){
-            //     // Position out of bounds, no need to go further.
-            //     break;
-            // }
-
-            // let target_piece: Piece = board.get_piece(
-            //     col as u8,
-            //     row as u8,
-            // );
-
-            // let target_color: Color = target_piece.get_color();
-            
-            // // _ in match instructions means that it can be anything.
-            // // If we put a name like x instead of _, we can use the value within the curly braces {  }.
-            // match (&color, &target_color) {
-            //     (Color::EMPTY, _) => { panic!("Invalid color type for get_valid_diagonal_positions. Own color is Empty."); },
-            //     (Color::BLACK, Color::WHITE) | (Color::WHITE, Color::BLACK) => {
-            //         // The piece can occupy the position of it's rival.
-            //         // self.include_step(
-            //         //     col as u8,              // col: u8, 
-            //         //     row as u8,              // row: u8,
-            //         // );
-
-            //         // if target is a rival king, enable check.
-            //         if target_piece.is_king(){
-            //             self.set_check();
-            //         }
-
-            //         self.include_step(
-            //             target_piece,           // target: Piece,
-            //         );
-
-            //         break;
-            //     },
-            //     (Color::BLACK, Color::BLACK) | (Color::WHITE, Color::WHITE) => {
-            //         // The piece can't occupy the position of it's ally.
-            //         break;
-            //     },
-            //     (_, Color::EMPTY) => {
-            //         // Include current Position.
-            //         // self.include_step(
-            //         //     col as u8,          // col: u8, 
-            //         //     row as u8,          // row: u8,
-            //         // );
-            //         self.include_step(
-            //             target_piece,           // target: Piece,
-            //         );
-
-            //         // If this position is empty, keep looping.
-            //         // "continue" is not required, since the code doesn't do anything afterwards.
-            //         // "continue" jumps to the next step of the for loop. Ignoring the remaining instructions (there are none remaining).
-            //         continue;
-            //     }
-            // }
         }
     }
 

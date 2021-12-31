@@ -60,6 +60,6 @@ Will get the piece in the bottom right corner of the board. A "White Rook". Colu
 
 near call rust-tests.a-tests-account.testnet move_to '{"current_col": 0, "current_row": 6, "target_col": 0, "target_row": 4}' --account-id a-tests-account.testnet
 
-Will make the bottom white pawn move forward two steps (If it's the white player's turn). The pawn can only move forward two steps in it's first move. I forgot to implement that, there's a boolean there that controls if it's first move or not, but it currently doesn't turn off.
+Will make the bottom white pawn move forward two steps (If it's the white player's turn).
 
 There's also a function to reset the game and get the game status. Please check them out.

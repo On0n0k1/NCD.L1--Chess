@@ -15,7 +15,6 @@ use crate::{
 
 };
 
-// #[derive(PartialEq)]
 pub struct Player{
     color: Color,    
     pieces: Vec<Piece>,
@@ -161,43 +160,5 @@ impl Player{
 
         false
     }
-
-    // Called after each move.
-    // If the current player is still under check, return false.
-    // Player can't be under check after making their move.
-    // pub fn try_move(current_player: &mut Self, rival_player: &mut Self, board: &mut Board, step: &Step) -> Result<bool, ErrorResponse> {
-
-    //     if !current_player.move_to(
-    //         board,                                  // board: &mut Board, 
-    //         step,                                   // step: &Step,
-    //     )? {
-    //         return Result::Err(ErrorResponse::KingWillCheck);
-    //     };
-
-    //     rival_player.build_pieces(board);
-    //     rival_player.build_reports(board);
-        
-    //     if rival_player.is_check() {
-    //         // This means that the move done by the player didn't clear it's check status.
-    //         return Result::Err(ErrorResponse::KingIsCheck);
-    //     }
-
-    //     Result::Ok(true)
-
-        
-
-    // }
-
-    // pub fn move_to(&mut self, board: &mut Board, step: &Step) -> Result<bool, ErrorResponse> {
-    //     self.build_pieces(board);
-    //     self.build_reports(board);
-
-    //     if !(self.is_step_valid(step)?){
-    //         return Result::Ok(false);
-    //     }
-        
-        
-    //     Result::Ok(true)
-    // }
 }
 

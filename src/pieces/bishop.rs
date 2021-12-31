@@ -75,14 +75,6 @@ impl PieceExt for Bishop{
         board: &Board, 
         search_checkmate: bool,
     ) -> Report {
-    
-    // fn get_movement_report(
-    //     &self,
-    //     board: &Board,      // board: &Board,
-    // ) -> Report {
-        // let mut report: Report = Report::new(
-        //     Piece::BISHOP(self.clone()),    // piece: &Piece,
-        // );
         log(&format!("Getting Bishop Report"));
         let mut report: Report = Report::new(
             Piece::BISHOP(self.clone()),// piece: Piece, 

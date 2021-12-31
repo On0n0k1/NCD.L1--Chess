@@ -1,6 +1,5 @@
 use crate::{
     board::Board,
-    // movement::report::Report,
     pieces::{
         piece::{
             Color,
@@ -47,13 +46,6 @@ impl Step{
         current: Piece,
         target: Piece,
     ) -> Self{
-
-        // storing the values to revert the change later
-        // let previous_position: u8 = Report::col_row_to_index(
-        //     piece.get_column(),// col: u8, 
-        //     piece.get_row(),// row: u8,
-        // );
-
         Step{
             current_piece: current,
             target_piece: target,
@@ -85,12 +77,6 @@ impl Step{
         &mut self,
         board: &mut Board,
     ) {
-
-        // let target_position: u8 = self.target;
-        // board.move_piece(
-        //     self.current_piece.clone(),     // start: Piece,
-        //     self.target_piece.clone(),      // end: Piece,
-        // );
         let start_col: u8 = self.current_piece.get_column();
         let start_row: u8 = self.current_piece.get_row();
         let piece_number: u8 = self.current_piece.get_piece_number();
@@ -213,10 +199,6 @@ impl Step{
             rival_color,                    // color: Color,
             board,                          // board: &Board,
         );
-
-        // rival_player.build_pieces(
-        //     board,                          // board: &Board,
-        // );
 
         // search_checkmate = true means it won't build any vectors, it will only check if it's checking.
         rival_player.build_reports(
