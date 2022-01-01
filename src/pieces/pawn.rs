@@ -24,10 +24,10 @@ impl Pawn{
 
         return match self.color{
             Color::WHITE => {
-                self.current_column == 6
+                self.current_row == 6
             },
             Color::BLACK => {
-                self.current_column == 1
+                self.current_row == 1
             },
             _ => {
                 panic!("Error in Pawn.is_first_move. Own color is Empty.")
@@ -120,7 +120,7 @@ impl PieceExt for Pawn{
             true,                                   // no_rival: bool,
         );
         
-        if !(self.is_first_move()) {
+        if self.is_first_move() {
             // If the pawn never moved, it can take an extra step forward.
             report.include_step(
                 board,                              // board: &Board, 

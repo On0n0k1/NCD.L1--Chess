@@ -82,7 +82,7 @@ impl PieceExt for Bishop{
         );
 
         report.apply_valid_diagonal_positions(
-            7,                          // max_steps: i8, 
+            7,                 // max_steps: i8, 
             &board,                     // board: &Board,
         );
 

@@ -79,6 +79,25 @@ impl Game{
         String::from(message)
     }
 
+    #[private]
+    pub fn get_squares(&self) -> Vec<u8> {
+        self.squares.clone()
+    }
+
+    #[private]
+    pub fn get_turn(&self) -> u8 {
+        self.turn.clone()
+    }
+
+    #[private]
+    pub fn get_player_turn(&self) -> bool {
+        self.player_turn.clone()
+    }
+
+    #[private]
+    pub fn is_game_over(&self) -> bool {
+        self.game_over.clone()
+    }
 
     #[private]
     pub fn reset_game_game(&mut self) -> String{

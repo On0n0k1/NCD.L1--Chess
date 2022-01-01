@@ -136,20 +136,32 @@ impl Board{
     // we want it to panic if there's less than 64 elements.
     // It should never ever have more or less than 64 values.
     pub fn get_board_string(squares: &[u8]) -> String {
+        fn hex(number: u8) -> String {
+            match number{
+                10 => String::from("A"),
+                11 => String::from("B"),
+                12 => String::from("C"),
+                13 => String::from("D"),
+                14 => String::from("E"),
+                15 => String::from("F"),
+                _ => format!("{}", number),
+            }
+        }
+
         let mut response: String = String::from("\n");
 
         for row in 0..8{
             let index: usize = row * 8;
             response = format!("{}{} {} {} {} {} {} {} {}\n",
                 response,
-                squares[index],
-                squares[index + 1],
-                squares[index + 2],
-                squares[index + 3],
-                squares[index + 4],
-                squares[index + 5],
-                squares[index + 6],
-                squares[index + 7],
+                hex(squares[index]),
+                hex(squares[index + 1]),
+                hex(squares[index + 2]),
+                hex(squares[index + 3]),
+                hex(squares[index + 4]),
+                hex(squares[index + 5]),
+                hex(squares[index + 6]),
+                hex(squares[index + 7]),
             );
         }
 
