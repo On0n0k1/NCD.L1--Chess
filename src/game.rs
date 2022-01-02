@@ -11,6 +11,7 @@ use crate::{
     player::{
         errors::ErrorResponse,
         players::Players,
+        turn::Turn,
     },
     pieces::piece::Piece,
 };
@@ -59,6 +60,30 @@ impl Default for Game{
 impl Game{
 
     #[private]
+    fn update_game_state(&mut self, board: &mut Board, turn: Turn) {
+        // current_player,
+        // value,
+        // black_check: false,
+        // white_check: false,
+        // checkmate: false,
+
+        self.squares.clear();
+        for piece_number in board.get_board_array(){
+            self.squares.push(piece_number);
+        }
+
+        self.turn = turn.get_value();
+        self.player_turn = turn.get_current_player_boolean();
+        // self.game_over = turn.is_game_over();
+        self.black_check = turn.is_black_check();
+        self.white_check = turn.is_white_check();
+        if turn.is_checkmate(){
+            self.game_over = true;
+        }
+    }
+
+
+    #[private]
     fn handle_error(&mut self, error: ErrorResponse) -> String {
         let message: &str = match error{
             // If movement starts in a position that has no piece.
@@ -67,24 +92,6 @@ impl Game{
             ErrorResponse::RivalPiece => {"A rival player owns this piece. "},
             // If target position is invalid for given piece
             ErrorResponse::InvalidMove => {"Invalid move. "},
-            // If King is under check.
-            ErrorResponse::RivalIsCheck => {
-                match self.player_turn {
-                    false => {
-                        self.black_check = true;
-                    }
-                    true => {
-                        self.white_check = true;
-                    }
-                };
-
-                "Rival king is currently under check"
-            },
-            // If it's checkmate,
-            ErrorResponse::CheckMate => {
-                self.game_over = true;
-                "CheckMate"
-            },
             // If the game is already over.
             ErrorResponse::GameOver => {
                 self.game_over = true;
@@ -269,28 +276,34 @@ impl Game{
             },
             _ => {
                 // Copy the values from the virtual board to the machine state one.
-                self.squares.clear();
-                for piece_number in board.get_board_array(){
-                    self.squares.push(piece_number);
-                }
+                let game_state: Turn = players.get_turn();
+                self.update_game_state(
+                    &mut board,
+                    game_state,
+                );
 
-                let (
-                    player_turn, 
-                    turn,
-                ): (bool, u8) = players.get_turn_status();
+                // self.squares.clear();
+                // for piece_number in board.get_board_array(){
+                //     self.squares.push(piece_number);
+                // }
 
-                self.player_turn = player_turn;
-                self.turn = turn;
+                // let (
+                //     player_turn, 
+                //     turn,
+                // ): (bool, u8) = players.get_turn_status();
 
-                // If the move was successful, then current check state was cleared. Else it wouldn't be valid.
-                match self.player_turn {
-                    false => {
-                        self.white_check = false;
-                    },
-                    true => {
-                        self.black_check = false;
-                    }
-                }
+                // self.player_turn = player_turn;
+                // self.turn = turn;
+
+                // // If the move was successful, then current check state was cleared. Else it wouldn't be valid.
+                // match self.player_turn {
+                //     false => {
+                //         self.white_check = false;
+                //     },
+                //     true => {
+                //         self.black_check = false;
+                //     }
+                // }
 
                 return String::from("Move successful.");
             }

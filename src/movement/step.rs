@@ -182,6 +182,7 @@ impl Step{
 
     }
 
+    /// Build a rival player and see if current player is under check after this move.
     pub fn can_avoid_checkmate(&mut self, board: &mut Board) -> bool {
         let current_color: Color = self.current_piece.get_color();
 
@@ -200,7 +201,8 @@ impl Step{
             board,                          // board: &Board,
         );
 
-        // search_checkmate = true means it won't build any vectors, it will only check if it's checking.
+        // search_checkmate = true means it won't allocate any step
+        // Does rival player has current under check?
         rival_player.build_reports(
             board,                          // board: &Board, 
             true,                           // search_checkmate: bool,

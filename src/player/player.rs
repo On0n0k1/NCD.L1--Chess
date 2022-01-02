@@ -96,7 +96,11 @@ impl Player{
     /// Build reports once (Own),
     /// If under check, search for a position that clears the check (build rival reports),
     /// Do the movement and build reports again (build rival reports)
-    pub fn build_reports(&mut self, board: &Board, search_checkmate: bool){
+    pub fn build_reports(
+        &mut self, 
+        board: &Board, 
+        search_checkmate: bool,
+    ){
         // If search checkmate is true, then it won't store the positions in each report.
         // If it was a bug, then it would be a nightmare to track. That's why I'm storing it.
         self.search_checkmate = search_checkmate;

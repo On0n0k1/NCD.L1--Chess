@@ -19,6 +19,8 @@ use crate::{
     },
 };
 
+// use super::player;
+
 
 pub struct Players{
     black: Player,
@@ -69,6 +71,11 @@ impl Players{
     
 
     pub fn move_to(&mut self, board: &mut Board, mut target: Step) -> Result<(), ErrorResponse> {
+
+        if self.turn.is_checkmate(){
+            return Result::Err(ErrorResponse::GameOver);
+        }
+
         let player_color: Color = self.turn.get_current_player_color();
         
         let (current_player, other_player): (&mut Player, &mut Player) = match player_color{
@@ -106,6 +113,7 @@ impl Players{
             return Result::Err(ErrorResponse::InvalidMove);
         }
 
+        // If the function returns false, then current player will be under check after their move.
         if !target.can_avoid_checkmate(
             board,                          // board: &mut Board,
         ){
@@ -134,17 +142,28 @@ impl Players{
 
         if other_player.is_check(){
             
-            // Call function in step to check if making the move will cause itself to be under check.
+            // Returns true if there's any movement remaining that could save itself from checkmate.
             if !other_player.can_avoid_checkmate(
                 board,// board: &mut Board,
             ) {
                 // This means that there's no move that the rival player can take for saving themselves from check status
                 // Checkmate
-                return Result::Err(ErrorResponse::CheckMate);
+                // return Result::Err(ErrorResponse::CheckMate);
+                self.turn.set_checkmate();
             }
 
-            self.turn.next_turn()?;
-            return Result::Err(ErrorResponse::RivalIsCheck);
+            // self.turn.next_turn()?;
+            // return Result::Err(ErrorResponse::RivalIsCheck);
+            match player_color{
+                Color::BLACK => {
+                    // rival player color is opposite
+                    self.turn.set_white_check();
+                },
+                Color::WHITE => {
+                    self.turn.set_black_check();
+                },
+                _ => unimplemented!(),
+            }
         }
         
         // Move was successful, so we store the step and
@@ -159,15 +178,19 @@ impl Players{
         Result::Ok(())
     }
 
-    pub fn get_turn_status(&self) -> (bool, u8) {
-        // player_turn: bool,
-        // turn: u8,
-        // squares: [u8; 64],
-        let player_turn: bool = self.turn.get_current_player_boolean();
-        let turn: u8 = self.turn.get_turn();
-        // let squares: [u8; 64] = board.get_board_array();
+    // pub fn get_turn_status(&self) -> (bool, u8) {
+    //     // player_turn: bool,
+    //     // turn: u8,
+    //     // squares: [u8; 64],
+    //     let player_turn: bool = self.turn.get_current_player_boolean();
+    //     let turn: u8 = self.turn.get_turn();
+    //     // let squares: [u8; 64] = board.get_board_array();
         
 
-        (player_turn, turn)
+    //     (player_turn, turn)
+    // }
+
+    pub fn get_turn(&self) -> Turn {
+        self.turn.clone()
     }
 }
