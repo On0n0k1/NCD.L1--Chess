@@ -33,6 +33,9 @@ pub struct Game{
     turn: u8,
     player_turn: bool,
     game_over: bool,
+
+    black_check: bool,
+    white_check: bool,
 }
 
 impl Default for Game{
@@ -45,6 +48,8 @@ impl Default for Game{
             turn: 0,
             player_turn: false,
             game_over: false,
+            black_check: false,
+            white_check: false,
         }
     }
 }
@@ -63,7 +68,18 @@ impl Game{
             // If target position is invalid for given piece
             ErrorResponse::InvalidMove => {"Invalid move. "},
             // If King is under check.
-            ErrorResponse::KingIsCheck => {"King is currently under check"},
+            ErrorResponse::RivalIsCheck => {
+                match self.player_turn {
+                    false => {
+                        self.black_check = true;
+                    }
+                    true => {
+                        self.white_check = true;
+                    }
+                };
+
+                "Rival king is currently under check"
+            },
             // If it's checkmate,
             ErrorResponse::CheckMate => {
                 self.game_over = true;
@@ -97,6 +113,16 @@ impl Game{
     #[private]
     pub fn is_game_over(&self) -> bool {
         self.game_over.clone()
+    }
+
+    #[private]
+    pub fn is_black_check(&self) -> bool {
+        self.black_check.clone()
+    }
+
+    #[private]
+    pub fn is_white_check(&self) -> bool {
+        self.white_check.clone()
     }
 
     #[private]
@@ -143,12 +169,16 @@ impl Game{
         let turn: u8 = self.turn. clone();
         let player_turn: bool = self.player_turn.clone();
         let game_over: bool = self.game_over.clone();
+        let black_check: bool = self.black_check.clone();
+        let white_check: bool = self.white_check.clone();
 
         Game{
             squares,
             turn,
             player_turn,
             game_over,
+            black_check,
+            white_check,
         }
     }
 
@@ -251,7 +281,17 @@ impl Game{
 
                 self.player_turn = player_turn;
                 self.turn = turn;
-            
+
+                // If the move was successful, then current check state was cleared. Else it wouldn't be valid.
+                match self.player_turn {
+                    false => {
+                        self.white_check = false;
+                    },
+                    true => {
+                        self.black_check = false;
+                    }
+                }
+
                 return String::from("Move successful.");
             }
         }

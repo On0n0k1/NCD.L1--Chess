@@ -90,4 +90,10 @@ impl PieceExt for Bishop{
     }
 }
 
+// #[cfg(test)]
+// mod tests {
+//     use super::*;
 
+//     #[test]
+//     fn
+// }

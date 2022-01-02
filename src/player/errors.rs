@@ -5,8 +5,8 @@ pub enum ErrorResponse{
     RivalPiece,
     // If target position is invalid for given piece
     InvalidMove,
-    // If King is under check.
-    KingIsCheck,
+    // If Rival King is now under check.
+    RivalIsCheck,
     // If it's checkmate,
     CheckMate,
     // If the game is already over.

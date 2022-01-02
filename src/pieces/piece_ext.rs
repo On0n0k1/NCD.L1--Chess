@@ -38,7 +38,8 @@ pub trait PieceExt{
         match(self_color, target_color) {
             (Color::BLACK, Color::WHITE) => return true,
             (Color::WHITE, Color::BLACK) => return true,
-            (Color::EMPTY, _) => panic!("Error in function is_rival. self value is Empty. This shouldn't ever be checked."),
+            (Color::EMPTY, _) => panic!("Error in function is_rival. self color is Empty. This shouldn't ever be checked."),
+            (_, Color::EMPTY) => panic!("Error in function is_rival. target color is Empty. This shouldn't ever be checked."),
             (_, _) => return false,
         }
     }

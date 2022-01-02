@@ -112,7 +112,7 @@ impl Report{
                 if !no_empty {
                     // If this is true (used by pawn), ignores empty spots.
                     if !self.search_checkmate{
-                        // If this is true, we're only checking for checkmate. We won't use steps.
+                        // If this is true, we're only checking for checkmate. We won't allocate steps.
                     
                         let step: Step = Step::new(
                             self.piece.clone(),// current: Piece, 
@@ -187,11 +187,11 @@ impl Report{
             panic!("Error in count_steps. Max_steps is negative: {}\n", max_steps);
         }
     
-        let mut col: i8;
-        let mut row: i8;
+        // let mut col: i8;
+        // let mut row: i8;
         for counter in 1..(max_steps + 1){
-            col = start_col as i8 + go_right * counter;
-            row = start_row as i8 + go_down * counter;
+            let col: i8 = start_col as i8 + go_right * counter;
+            let row: i8 = start_row as i8 + go_down * counter;
 
             if !self.include_step(
                 board,                              // board: &Board, 
@@ -200,7 +200,7 @@ impl Report{
                 false,                              // no_empty: bool, 
                 false,                              // no_rival: bool,
             ){
-                // Function above returns true only when as it meets empty positions.
+                // Function above returns true only as it meets empty positions.
                 // So if false, stop counting.
                 break;
             }

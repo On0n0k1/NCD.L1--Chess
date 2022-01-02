@@ -109,7 +109,7 @@ impl Players{
         if !target.can_avoid_checkmate(
             board,                          // board: &mut Board,
         ){
-            return Result::Err(ErrorResponse::KingIsCheck);
+            return Result::Err(ErrorResponse::InvalidMove);
         };
 
         // If it reaches here, then the movement is valid and will not trigger a check own itself.
@@ -142,6 +142,9 @@ impl Players{
                 // Checkmate
                 return Result::Err(ErrorResponse::CheckMate);
             }
+
+            self.turn.next_turn()?;
+            return Result::Err(ErrorResponse::RivalIsCheck);
         }
         
         // Move was successful, so we store the step and
