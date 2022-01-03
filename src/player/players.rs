@@ -105,7 +105,7 @@ impl Players{
         // ? can be used in Result type enums.
         // If Result::Ok(value), use the value in the code.
         // If Result::Err(err), call "return Result::Err(err)".
-        // Can only be used in functions that return the same type of Result.
+        // Can only be used in functions that return the same type of Result::Err.
         // 
         // is_step_valid checks every piece for positions it can go to,
         // if the piece can go there, returns true.
@@ -133,6 +133,12 @@ impl Players{
 
         // Now we have to check if rival is under check. If he/she is, then we have to see if it's checkmate.
 
+        // Rebuild the new state of current player
+        current_player.build_reports(
+            board,                          // board: &Board, 
+            false,                          // search_checkmate: bool,
+        );
+
         // Build rival's movement reports.
         // search_checkmate = false means that it will store the positions available. 
         other_player.build_reports(
@@ -140,11 +146,21 @@ impl Players{
             false,                          // search_checkmate: bool,
         );
 
-        if other_player.is_check(){
-            
+        if current_player.is_check(){
+            match player_color{
+                Color::BLACK => {
+                    // rival player color is opposite
+                    self.turn.set_white_check();
+                },
+                Color::WHITE => {
+                    self.turn.set_black_check();
+                },
+                _ => panic!("Invalid color type for Players.move_to. Own color is Empty."),
+            }
+
             // Returns true if there's any movement remaining that could save itself from checkmate.
             if !other_player.can_avoid_checkmate(
-                board,// board: &mut Board,
+                board,                      // board: &mut Board,
             ) {
                 // This means that there's no move that the rival player can take for saving themselves from check status
                 // Checkmate
@@ -154,16 +170,7 @@ impl Players{
 
             // self.turn.next_turn()?;
             // return Result::Err(ErrorResponse::RivalIsCheck);
-            match player_color{
-                Color::BLACK => {
-                    // rival player color is opposite
-                    self.turn.set_white_check();
-                },
-                Color::WHITE => {
-                    self.turn.set_black_check();
-                },
-                _ => unimplemented!(),
-            }
+            
         }
         
         // Move was successful, so we store the step and

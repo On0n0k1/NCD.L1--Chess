@@ -22,6 +22,9 @@ pub struct Step{
 
 impl PartialEq for Step{
     fn eq(&self, other: &Self) -> bool {
+        let self_piece: u8 = self.current_piece.get_piece_number();
+        let other_piece: u8 = other.current_piece.get_piece_number();
+
         let self_current_column: u8 = self.current_piece.get_column();
         let self_current_row: u8 = self.current_piece.get_row();
 
@@ -34,12 +37,31 @@ impl PartialEq for Step{
         let other_target_column: u8 = other.target_piece.get_column();
         let other_target_row: u8 = other.target_piece.get_row();
 
-        (self_current_column == other_current_column)
+        (self_piece == other_piece)
+        && (self_current_column == other_current_column)
         && (self_current_row == other_current_row)
         && (self_target_column == other_target_column)
         && (self_target_row == other_target_row)
     }
 }
+
+impl std::fmt::Display for Step {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        let start_col: u8 = self.current_piece.get_column();
+        let start_row: u8 = self.current_piece.get_row();
+        
+        let end_col: u8 = self.target_piece.get_column();
+        let end_row: u8 = self.target_piece.get_row();
+
+        write!(f, "[({}, {}), ({},{})]", 
+            start_row,
+            start_col,
+            end_row,
+            end_col,
+        )
+    }
+}
+
 
 impl Step{
     pub fn new(

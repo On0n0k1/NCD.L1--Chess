@@ -101,6 +101,7 @@ impl Report{
                         self.steps.push(step);
                     }
                 }
+
                 return false
             },
             (Color::BLACK, Color::BLACK) | (Color::WHITE, Color::WHITE) => {

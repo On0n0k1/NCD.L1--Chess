@@ -49,6 +49,7 @@ pub mod game;
 
 
 use near_sdk::borsh::{self, BorshDeserialize, BorshSerialize};
+#[allow(unused_imports)]
 use near_sdk::{env, near_bindgen};
 use near_sdk::serde::{Deserialize, Serialize};
 
@@ -56,80 +57,87 @@ use game::Game;
 
 near_sdk::setup_alloc!();
 
-
+#[cfg(not(test))]
 pub fn log(message: &str){
     env::log(message.as_bytes());
 }
 
+#[cfg(test)]
+pub fn log(_message: &str){
+    // Not logging because too many logs will be generated during test.
+    // Causing a (well-deserved) Near error.
+    // No user has time to read more than 100 logs in a single run.
+}
 
-// metadata!{
-    #[near_bindgen]
-    #[derive(Default, Serialize, Deserialize, BorshDeserialize, BorshSerialize)]
-    #[serde(crate = "near_sdk::serde")]
-    pub struct Chess {
-        game: Game,
+
+
+#[near_bindgen]
+#[derive(Default, Serialize, Deserialize, BorshDeserialize, BorshSerialize)]
+#[serde(crate = "near_sdk::serde")]
+pub struct Chess {
+    game: Game,
+}
+
+#[near_bindgen]
+impl Chess{
+    // Reset the game to the beginning.
+    pub fn reset_game(&mut self) -> String {
+        self.game.reset_game_game()
     }
 
-    #[near_bindgen]
-    impl Chess{
-        // Reset the game to the beginning.
-        pub fn reset_game(&mut self) -> String {
-            self.game.reset_game_game()
-        }
-
-        // Return the state of the game.
-        pub fn get_game_status(&self) -> Game{
-            self.game.get_game_status_game()
-        }
-
-        // Get the name of a piece in given position.
-        pub fn get_piece_name(&self, col: u8, row: u8) -> String{
-            self.game.get_piece_name_game(col, row)
-        }
-
-        // Get the name of a piece in given index.
-        pub fn get_piece_name_index(&self, index: u8) -> String {
-            self.game.get_piece_name_index_game(index)
-        }
-
-        // Get the entire board as a string.
-        pub fn get_board(&self) -> String {
-            self.game.get_board_game()
-        }
-
-        
-        // Move a piece from position "current" to "target" by column and row.
-        pub fn move_to(
-            &mut self,
-            current_col: u8,
-            current_row: u8,
-            target_col: u8,
-            target_row: u8,
-        ) -> String {
-            let current_index: u8 = current_row * 8 + current_col;
-            let target_index: u8 = target_row * 8 + target_col;
-            return self.move_to_index(
-                current_index,              // current: u8,
-                target_index,               // target: u8,
-            );
-        }
-
-        // Move a piece from position "current" to "target" by index.
-        pub fn move_to_index(
-            &mut self,
-            current: u8,
-            target: u8,
-        ) -> String {
-            let response: String = self.game.move_to_game(
-                current,
-                target,
-            );
-
-            log(&response);
-            response
-        }
+    // Return the state of the game.
+    pub fn get_game_status(&self) -> Game{
+        self.game.get_game_status_game()
     }
-// }
+
+    // Get the name of a piece in given position.
+    pub fn get_piece_name(&self, col: u8, row: u8) -> String{
+        self.game.get_piece_name_game(col, row)
+    }
+
+    // Get the name of a piece in given index.
+    pub fn get_piece_name_index(&self, index: u8) -> String {
+        self.game.get_piece_name_index_game(index)
+    }
+
+    // Get the entire board as a string.
+    pub fn get_board(&self) -> String {
+        self.game.get_board_game()
+    }
+
+    
+    // Move a piece from position "current" to "target" by column and row.
+    pub fn move_to(
+        &mut self,
+        current_col: u8,
+        current_row: u8,
+        target_col: u8,
+        target_row: u8,
+    ) -> String {
+        let current_index: u8 = current_row * 8 + current_col;
+        let target_index: u8 = target_row * 8 + target_col;
+        return self.move_to_index(
+            current_index,              // current: u8,
+            target_index,               // target: u8,
+        );
+    }
+
+    // Move a piece from position "current" to "target" by index.
+    pub fn move_to_index(
+        &mut self,
+        current: u8,
+        target: u8,
+    ) -> String {
+        let response: String = self.game.move_to_game(
+            current,
+            target,
+        );
+
+        log(&response);
+        response
+    }
+}
+
 
 
 #[cfg(test)]
@@ -229,6 +237,11 @@ mod tests {
 
         let game_status: Game = contract.get_game_status();
         let black_check: bool = game_status.is_black_check();
+        let board: Vec<u8> = game_status.get_squares();
+        println!("{}", Board::get_board_string(
+            &board[..],
+        ));
+        
         assert!(black_check, "Black was supposed to be under checkmate here");
     }
 
@@ -987,7 +1000,7 @@ mod tests {
             ],
         );
 
-        // assert_black_checkmate(&mut contract);
+        assert_black_checkmate(&mut contract);
 
         
     }
