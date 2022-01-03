@@ -1,5 +1,4 @@
 use crate::{
-    log,
     board::Board,
     pieces::{
         piece::{
@@ -32,25 +31,25 @@ pub struct Players{
 impl Players{
     pub fn new(board: &Board, current_player: bool, turn: u8) -> Self{
 
-        log(&format!("Creating Black Pieces"));
+        // log(&format!("Creating Black Pieces"));
         let mut black: Player = Player::new(
             Color::BLACK,                   // color: Color, 
             board,                          // board: &Board,
         );
 
-        log(&format!("Building Black Pieces"));
+        // log(&format!("Building Black Pieces"));
         black.build_reports(
             board,                          // board: &Board,
             false,                          // search_checkmate: bool,
         );
 
-        log(&format!("Creating White Pieces"));
+        // log(&format!("Creating White Pieces"));
         let mut white: Player = Player::new(
             Color::WHITE,                   // color: Color,
             board,                          // board: &Board,
         );
 
-        log(&format!("Building White Pieces"));
+        // log(&format!("Building White Pieces"));
         white.build_reports(
             board,                          // board: &Board,
             false,                          // search_checkmate: bool
@@ -84,7 +83,7 @@ impl Players{
                 let current_player = &mut self.black;
                 let other_player = &mut self.white;
 
-                log(&format!("Current Player is Black."));
+                // log(&format!("Current Player is Black."));
                 (current_player, other_player)
             },
             Color::WHITE => {
@@ -92,7 +91,7 @@ impl Players{
                 let other_player = &mut self.black;
 
 
-                log(&format!("Current Player is White"));
+                // log(&format!("Current Player is White"));
                 (current_player, other_player)
             }
         };

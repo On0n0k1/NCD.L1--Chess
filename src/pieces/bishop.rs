@@ -1,7 +1,6 @@
 use std::clone::Clone;
 
 use crate::{
-    log,
     board::Board,
     pieces::{
         piece::{
@@ -75,7 +74,7 @@ impl PieceExt for Bishop{
         board: &Board, 
         search_checkmate: bool,
     ) -> Report {
-        log(&format!("Getting Bishop Report"));
+        // log(&format!("Getting Bishop Report"));
         let mut report: Report = Report::new(
             Piece::BISHOP(self.clone()),// piece: Piece, 
             search_checkmate,           // search_checkmate: bool,

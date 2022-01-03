@@ -63,10 +63,8 @@ pub fn log(message: &str){
 }
 
 #[cfg(test)]
-pub fn log(_message: &str){
-    // Not logging because too many logs will be generated during test.
-    // Causing a (well-deserved) Near error.
-    // No user has time to read more than 100 logs in a single run.
+pub fn log(message: &str){
+    println!("{}", message);
 }
 
 

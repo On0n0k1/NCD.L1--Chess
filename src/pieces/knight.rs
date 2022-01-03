@@ -1,6 +1,5 @@
 use crate::{
     board::Board,
-    log,
     pieces::{
         piece::{
             Color,
@@ -76,7 +75,7 @@ impl PieceExt for Knight{
     ) -> Report {
         // let mut valid_positions: Vec<u8> = Vec::with_capacity(8);
             
-        log(&format!("Getting Knight report"));
+        // log(&format!("Getting Knight report"));
         let mut report: Report= Report::new(
             Piece::KNIGHT(self.clone()),    // piece: Piece,
             search_checkmate,               // search_checkmate: bool,

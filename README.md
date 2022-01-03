@@ -7,7 +7,7 @@ A chess game for the NEAR network. The pieces move properly, but I still need to
 ## Recommendations (How I'm building this project)
 For testing the project, I usually create a subaccount, deploy to it, run my functions and then delete the subaccount.
 
-Call "near login" to enter your main account. Let's say I have a testnet account called "a-test-account.testnet". In that case, I call "near create-account rust-tests.a-test-account.testnet --masterAccount a-test-account.testnet --initialBalance 100" to create a subaccount with name rust-tests and a deposit of 100 NEAR. When I'm done using the deployed project, I would call "near delete rust-tests.a-test-account.testnet a-test-account.testnet", which means the subaccount gets deleted and all the remaining NEAR is transfered back to a-tests-account.testnet.
+Call "near login" to enter your main account. Let's say I have a testnet account called "a-test-account.testnet". In that case, I call "near create-account rust-tests.a-test-account.testnet --masterAccount a-test-account.testnet --initialBalance 100" to create a subaccount with name rust-tests and a deposit of 100 NEAR. When I'm done using the deployed project, I would call "near delete rust-tests.a-test-account.testnet a-test-account.testnet", which means the subaccount gets deleted and all the remaining NEAR is transferred back to a-tests-account.testnet.
 
 
 ## Compiling and deploying this chess game.
@@ -24,7 +24,7 @@ To reach the folder with the compiled wasm.
 
 near deploy --accountId rust-tests.a-test-account.testnet --wasmFile ./chess.wasm
 
-If everything goes well, the subaccount now runs the compiled project. We can run it's functions remotely.
+If everything goes well, the subaccount now contains the compiled project. We can run it's functions remotely.
 
 ## Functions available
 

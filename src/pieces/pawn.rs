@@ -1,6 +1,5 @@
 use crate::{
     board::Board,
-    log,
     pieces::{
         piece::{
             Color,
@@ -91,7 +90,7 @@ impl PieceExt for Pawn{
         search_checkmate: bool,
     ) -> Report {
         
-        log(&format!("Getting Pawn Report"));
+        // log(&format!("Getting Pawn Report"));
         let mut report: Report = Report::new(
             Piece::PAWN(self.clone()),          // piece: Piece,
             search_checkmate,                   // search_checkmate: bool,
