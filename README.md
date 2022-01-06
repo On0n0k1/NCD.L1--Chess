@@ -63,3 +63,15 @@ near call rust-tests.a-tests-account.testnet move_to '{"current_col": 0, "curren
 Will make the bottom white pawn move forward two steps (If it's the white player's turn).
 
 There's also a function to reset the game and get the game status. Please check them out.
+
+
+### Costs
+
+I ran the methods from the tests sections in the main lib file. Checking in the explorer, the gas used to deploy the contract was 25TGas. To run each move function the gas cost was 6TGas. To run the last move function that caused the checkmate, the gas cost was 7TGas.
+
+Multiply it by the cost in https://explorer.near.org/ to get the cost in Near for each move function.
+
+At the time of writing this section of the README (jan 6 2022). The cost for each TGas is 0.0001 Ⓝ. The cost for each Ⓝ is U$16.02 . So each function call will cost 0.009612 dollars (TGas used * TGas cost * NearCost(dollars)).
+
+A chess match takes from 40 to 60 moves to end. So a player should play around 2 matches for each dollar spent. In other words, mining near must be very worthwhile right now. I'm not an expert in mining, don't rely too much on my word please.
+
